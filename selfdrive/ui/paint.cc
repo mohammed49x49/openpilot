@@ -214,7 +214,7 @@ static void ui_draw_vision_brake(UIState *s) {
   const int radius = 96;
   const int center_x = s->viz_rect.x + radius + (bdr_s * 2) + 255;
   const int center_y = s->viz_rect.bottom() - footer_h / 2;
-  ui_draw_circle_image(s, center_x, center_y, brake_size, "brake_img", s->scene.brakeLights);
+  ui_draw_circle_image(s, center_x, center_y, radius, "brake_img", s->scene.brakeLights);
 }
 
 static void ui_draw_driver_view(UIState *s) {
@@ -433,7 +433,7 @@ static void ui_draw_vision_alert(UIState *s) {
                      .h = alr_h};
 
   ui_fill_rect(s->vg, rect, color);
-  ui_fill_rect(s->vg, rect, nvgLinearGradient(s->vg, rect.x, rect.y, rect.x, rect.bottom(), 
+  ui_fill_rect(s->vg, rect, nvgLinearGradient(s->vg, rect.x, rect.y, rect.x, rect.bottom(),
                                             nvgRGBAf(0.0, 0.0, 0.0, 0.05), nvgRGBAf(0.0, 0.0, 0.0, 0.35)));
 
   nvgFillColor(s->vg, COLOR_WHITE);
