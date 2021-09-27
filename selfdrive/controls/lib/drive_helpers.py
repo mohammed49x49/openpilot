@@ -6,7 +6,8 @@ from cereal import car
 V_CRUISE_MAX = 135
 V_CRUISE_MIN = 8
 V_CRUISE_DELTA = 8
-V_CRUISE_ENABLE_MIN = 40
+V_CRUISE_OFFSET = 3
+V_CRUISE_ENABLE_MIN = 5
 MPC_N = 16
 CAR_ROTATION_RADIUS = 0.0
 
@@ -37,9 +38,9 @@ def update_v_cruise(v_cruise_kph, buttonEvents, enabled):
   for b in buttonEvents:
     if enabled and not b.pressed:
       if b.type == car.CarState.ButtonEvent.Type.accelCruise:
-        v_cruise_kph += V_CRUISE_DELTA - (v_cruise_kph % V_CRUISE_DELTA)
+        v_cruise_kph += V_CRUISE_DELTA - (v_cruise_kph % V_CRUISE_DELTA - V_CRUISE_OFFSET)
       elif b.type == car.CarState.ButtonEvent.Type.decelCruise:
-        v_cruise_kph -= V_CRUISE_DELTA - ((V_CRUISE_DELTA - v_cruise_kph) % V_CRUISE_DELTA)
+        v_cruise_kph -= V_CRUISE_DELTA - ((V_CRUISE_DELTA - v_cruise_kph + V_CRUISE_OFFSET) % V_CRUISE_DELTA)
       v_cruise_kph = clip(v_cruise_kph, V_CRUISE_MIN, V_CRUISE_MAX)
 
   return v_cruise_kph
